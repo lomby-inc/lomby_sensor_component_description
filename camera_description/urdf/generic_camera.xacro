@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<robot name="lomby" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- OTHER CAMERAS -->
+  <xacro:macro name="generic_camera" params="prefix mass parent_link xyz rpy">
+    <link name="${prefix}_frame"/>
+    <joint name="${prefix}_joint" type="fixed">
+      <parent link="${parent_link}"/>
+      <child link="${prefix}_frame"/>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+    </joint>
+
+    <link name="${prefix}_optical_frame">
+      <collision>
+        <geometry>
+          <box size="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+      <xacro:box_inertia m="${mass}" w="0.01" d="0.01" h="0.01"/>
+    </link>
+    <joint name="${prefix}_optical_joint" type="fixed">
+      <parent link="${prefix}_frame"/>
+      <child link="${prefix}_optical_frame"/>
+      <origin xyz="0 0 0" rpy="${-pi / 2} 0 ${-pi / 2}"/>
+    </joint>
+  </xacro:macro>
+</robot>
